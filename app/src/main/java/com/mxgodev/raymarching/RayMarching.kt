@@ -11,14 +11,14 @@ import java.nio.FloatBuffer
 
 class RayMarching(vertexShaderCode: String, fragmentShaderCode: String) {
     companion object {
-        private const val COORDS_PER_VERTEX = 3
+        private const val COORDS_PER_VERTEX = 2
     }
 
     private val vertices = floatArrayOf(
-        -1.0f, -1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        1.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f,
+        -1.0f, 1.0f,
+        1.0f, -1.0f,
+        1.0f, 1.0f,
     )
 
     private val vertexBuffer: FloatBuffer = ByteBuffer.allocateDirect(vertices.size * 4).run {

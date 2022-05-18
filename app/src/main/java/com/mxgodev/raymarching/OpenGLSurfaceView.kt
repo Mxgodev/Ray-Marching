@@ -2,6 +2,7 @@ package com.mxgodev.raymarching
 
 import android.content.Context
 import android.opengl.GLSurfaceView
+import android.view.MotionEvent
 
 class OpenGLSurfaceView(context: Context) : GLSurfaceView(context) {
     private val renderer : OpenGLRenderer
