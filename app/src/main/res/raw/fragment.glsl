@@ -13,6 +13,12 @@ const float SPHERE_ID = 1.0;
 const float PLANE_ID = 2.0;
 const float TORUS_ID = 3.0;
 
+vec2 smin( vec2 a, vec2 b, float k )
+{
+    float h = max( k-abs(a.x-b.x), 0.0 )/k;
+    return vec2(min( a.x, b.x ) - h*h*k*(1.0/4.0), a.x < b.x ? a.y : b.y);
+}
+
 //Функции расстояния
 float dSphere(vec3 p, float r) {
     return length(p) - r;
@@ -40,12 +46,12 @@ void rot(inout vec2 p, float a) {
 vec2 map(vec3 p) {
 
     //Cфера
-    float sphereDist = dSphere(p, 1.0);
+    float sphereDist = dSphere(p + vec3(0, sin(u_time), 0), 1.0);
     vec2 sphere = vec2(sphereDist, SPHERE_ID);
 
-    //Тор
-    float torusDist = dTorus(p, vec2(2, 0.5));
-    vec2 torus = vec2(torusDist, TORUS_ID);
+//    //Тор
+//    float torusDist = dTorus(p, vec2(2, 0.5));
+//    vec2 torus = vec2(torusDist, TORUS_ID);
 
 
     //Плоскость
@@ -53,8 +59,8 @@ vec2 map(vec3 p) {
     vec2 plane = vec2(planeDist, PLANE_ID);
 
     vec2 res;
-    res = oUnion(plane, sphere);
-    res = oUnion(res, torus);
+    res = smin(plane, sphere, 0.5);
+//    res = oUnion(res, torus);
 
     return res;
 }
